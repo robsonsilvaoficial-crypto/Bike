@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cálculos — Projeto 500</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header container">
+    <a href="index.html" class="back">← Início</a>
+    <h1>Cálculos e calculadora interativa — Projeto 500</h1>
+  </header>
+
+  <main class="container">
+    <article class="card">
+      <h2>Resumo das contas (exemplo)</h2>
+      <p>Usamos 48 V como referência; veja os cálculos passo a passo e depois experimente a calculadora abaixo.</p>
+
+      <h3>Corrente teórica</h3>
+      <pre>
+I = P ÷ V
+P = 500 W
+V = 48 V
+I = 500 ÷ 48 ≈ 10,4167 A (teórico)
+Com margem de 15% (perdas): ≈ 12,0 A contínuo
+      </pre>
+
+      <h3>Bateria exemplo</h3>
+      <pre>
+Consumo exemplo: 15 Wh/km
+Alcance desejado: 40 km
+Energia necessária = 15 × 40 = 600 Wh
+Capacidade Ah = 600 ÷ 48 = 12,5 Ah → arredonda para 13 Ah
+Pack exemplo: 13S5P (≈65 células 18650 de 3,0 Ah)
+      </pre>
+    </article>
+
+    <article class="card">
+      <h2>Calculadora interativa</h2>
+      <p>Altere os valores abaixo e veja resultados instantâneos (tensão, Ah, Wh, autonomia, corrente, tempo de carga).</p>
+
+      <form id="calcForm" onsubmit="return false;">
+        <div class="grid">
+          <label>Potência desejada (W)<input type="number" id="power" value="500" min="50" step="10"></label>
+          <label>Tensão do sistema (V)<input type="number" id="voltage" value="48" min="12" step="1"></label>
+          <label>Capacidade da bateria (Ah)<input type="number" id="ah" value="13" min="1" step="0.1"></label>
+          <label>Consumo estimado (Wh/km)<input type="number" id="consumption" value="15" min="5" step="0.1"></label>
+          <label>Eficiência sistema (%)<input type="number" id="eff" value="85" min="50" max="100" step="1"></label>
+          <label>Taxa de carga (C)<input type="number" id="c_rate" value="0.5" min="0.1" step="0.1"></label>
+        </div>
+
+        <div class="results" id="results" aria-live="polite">
+          <!-- results populated by JS -->
+        </div>
+
+        <details>
+          <summary>Configuração de células (exemplo 18650)</summary>
+          <div style="margin-top:0.5rem;">
+            <label>Tensão célula (V)<input type="number" id="cell_v" value="3.7" step="0.01" min="3"></label>
+            <label>Capacidade célula (Ah)<input type="number" id="cell_ah" value="3.0" step="0.1" min="0.5"></label>
+            <button id="computePack" class="btn">Calcular S × P</button>
+            <div id="packResult" style="margin-top:0.5rem;"></div>
+          </div>
+        </details>
+
+      </form>
+    </article>
+
+    <article class="card">
+      <h2>Explicações rápidas</h2>
+      <ul>
+        <li><strong>Wh</strong> = V × Ah → energia da bateria</li>
+        <li><strong>Autonomia</strong> = Wh ÷ consumo (Wh/km)</li>
+        <li><strong>Corrente</strong> = Potência ÷ Tensão (ajustado pela eficiência)</li>
+        <li><strong>Tempo de carga</strong> = Ah ÷ (C × Ah) → por exemplo C=0.5 significa carregar à corrente 0.5×Ah</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="site-footer container">
+    <small>Use os resultados como referência. Testes práticos e segurança são essenciais.</small>
+  </footer>
+
+  <script src="js/calc.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
